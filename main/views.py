@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -14,7 +14,7 @@ def home(request):
 class RegistrationView(CreateView):
     form_class = RegisterForm
     template_name = "registration.html"
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('home')
 
 
 class AuthenticationView(LoginView):
