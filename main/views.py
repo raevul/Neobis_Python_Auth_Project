@@ -14,7 +14,12 @@ def home(request):
 class RegistrationView(CreateView):
     form_class = RegisterForm
     template_name = "registration.html"
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('profile')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, form.instance)
+        return response
 
 
 class AuthenticationView(LoginView):
