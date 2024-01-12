@@ -1,5 +1,4 @@
-from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
+from django.core.mail import send_mail
 
 
 def send_activation_code(user):
