@@ -3,23 +3,41 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib.auth.models import User
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import send_mail
+
 
 from .forms import RegisterForm, LoginForm
+from .utils import send_activation_code
 
 
 def home(request):
-    return render(request, "base.html")
+    return render(request, "home.html")
 
 
-class RegistrationView(CreateView):
-    form_class = RegisterForm
-    template_name = "registration.html"
-    success_url = reverse_lazy('profile')
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, form.instance)
-        return response
+# class RegistrationView(CreateView):
+#     form_class = RegisterForm
+#     template_name = "registration.html"
+#     success_url = "home"
+#
+#     def send_message(self, request):
+#         if request.method == "POST":
+#             form = RegisterForm(request.POST)
+#             if form.is_valid():
+#                 user = form.save(commit=False)
+#                 user.is_active = False
+#                 user.save()
+#                 send_activation_code(user)
+#                 print(send_activation_code)
+#                 return render(request, "verification.html")
+#         else:
+#             form = RegisterForm()
+#         context = {
+#             "form": form,
+#         }
+#         return render(request, self.template_name, context)
 
 
 class AuthenticationView(LoginView):
@@ -28,6 +46,23 @@ class AuthenticationView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('profile')
+
+
+def send_message(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            send_activation_code(user)
+            return render(request, "verification.html")
+    else:
+        form = RegisterForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "registration.html", context)
 
 
 def profile(request):

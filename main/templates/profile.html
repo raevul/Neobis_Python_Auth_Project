@@ -11,7 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ user.username }}</h5>
           <p class="card-email">{{ user.email }}</p>
-          <a href="{% url 'logout' %}" class="link-danger">Logout</a>
+          <a href="{% url 'logout' %}"><button type="submit" class="btn btn-danger">Logout</button></a>
         </div>
       </div>
     </div>
