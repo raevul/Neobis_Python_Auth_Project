@@ -2,9 +2,9 @@ from django.core.mail import send_mail
 
 
 def send_activation_code(user):
-    subject = "django"
-    message = f"hello {user.username}"
-    from_email = "raevul@mail.ru"
+    subject = "Verify your email"
+    message = f"""Hello {user.username}, please click on the link to verify your account: """
+    from_email = "pdjango73@gmail.com"
     recipient_list = [user.email, ]
 
     send_mail(
@@ -15,7 +15,3 @@ def send_activation_code(user):
         fail_silently=False,
     )
     print(f"Сообщение отправлено на {user.email}")
-
-
-# subject = "Verify your email"
-# message = f"""Thank you for registration in our site, please click on the link to verify your account: """

@@ -10,7 +10,7 @@
         {% if user.is_authenticated %}
             <a href="/profile/"><button type="button" class="btn btn-primary">{{ user.username }}</button></a>
         {% else %}
-            <a href="/verification/"><button type="button" class="btn btn-primary">Registration</button></a>
+            <a href="/registration/"><button type="button" class="btn btn-primary">Registration</button></a>
             <a href="/authentication/"><button type="button" class="btn btn-primary">Authentication</button></a>
         {% endif %}
     </div>

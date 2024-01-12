@@ -17,38 +17,7 @@ def home(request):
     return render(request, "home.html")
 
 
-# class RegistrationView(CreateView):
-#     form_class = RegisterForm
-#     template_name = "registration.html"
-#     success_url = "home"
-#
-#     def send_message(self, request):
-#         if request.method == "POST":
-#             form = RegisterForm(request.POST)
-#             if form.is_valid():
-#                 user = form.save(commit=False)
-#                 user.is_active = False
-#                 user.save()
-#                 send_activation_code(user)
-#                 print(send_activation_code)
-#                 return render(request, "verification.html")
-#         else:
-#             form = RegisterForm()
-#         context = {
-#             "form": form,
-#         }
-#         return render(request, self.template_name, context)
-
-
-class AuthenticationView(LoginView):
-    form_class = LoginForm
-    template_name = "authentication.html"
-
-    def get_success_url(self):
-        return reverse_lazy('profile')
-
-
-def send_message(request):
+def registration(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -63,6 +32,14 @@ def send_message(request):
         "form": form,
     }
     return render(request, "registration.html", context)
+
+
+class AuthenticationView(LoginView):
+    form_class = LoginForm
+    template_name = "authentication.html"
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
 
 
 def profile(request):
